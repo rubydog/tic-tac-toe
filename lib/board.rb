@@ -24,16 +24,22 @@ module TicTacToe
 		end
 
 		def print
-			count = 1
-			output = "  1    2    3 \n"
-			board.flatten.each_with_index do |cell, index|
-				output << ' ' + cell.to_s + ' '
-				case index % 3
-				when 0, 1 then output << ' | '
-				when 2
-					output << " #{count}" +
-					("\n---------------\n" unless index == 8).to_s
-					count += 1
+			output = ''
+			width.times do |number|
+				output +=  '   ' + (number + 1).to_s + '  '
+			end
+			output += "\n"
+			@board.each_with_index do |row, row_index|
+				output += (row_index + 1).to_s + ' '
+				row.each_with_index do |cell, cell_index|
+					output += ' ' + (cell || ' ') + ' '
+					if cell_index % width == 0 ||
+					   cell_index % width == 1
+						output += ' | '
+					end
+				end
+				if row_index != width-1
+					output += "\n  ----------------\n"
 				end
 			end
 			puts output
